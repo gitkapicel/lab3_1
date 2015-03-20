@@ -19,16 +19,24 @@ public class BookKeeperTest {
 	@Test
 	public void test() {
 		//given
+		Money money = new Money(10);
+		Id id = new Id("1");
 		TaxPolicy tax =mock(TaxPolicy.class);
 		InvoiceFactory invoiceFactory = mock(InvoiceFactory.class);
 		BookKeeper book = new BookKeeper(invoiceFactory);
-		InvoiceRequest invoiceRequest = new InvoiceRequest(new ClientData(new Id("1"),"fakturka"));
-		ProductData productData = new ProductData(new Id("1"),new Money(10), "book",ProductType.DRUG, new Date(0));
-		RequestItem requestitem = new RequestItem(productData,15,new Money(20));
+		ClientData clientData = new ClientData(id,"dzemba");
+		InvoiceRequest invoiceRequest = new InvoiceRequest(clientData);
+		//ProductData productData = new ProductData(id,money, "book",ProductType.DRUG, new Date(0));
+		//RequestItem requestitem = new RequestItem(productData,15,money);
+		
+	
+		when(invoiceFactory.create(clientData)).thenReturn(new Invoice(id,clientData));
+		
+		when(tax.calculateTax(ProductType.DRUG, money)).thenReturn(new Tax(money,"opis"));
 		
 		
 		//when
-		when(book.issuance(invoiceRequest, tax).thenReturn(serviceMock));
+		when(book.issuance(invoiceRequest, tax).thenReturn());
 		
 		
 		

@@ -26,22 +26,26 @@ public class BookKeeperTest {
 		BookKeeper book = new BookKeeper(invoiceFactory);
 		ClientData clientData = new ClientData(id,"dzemba");
 		InvoiceRequest invoiceRequest = new InvoiceRequest(clientData);
-		//ProductData productData = new ProductData(id,money, "book",ProductType.DRUG, new Date(0));
-		//RequestItem requestitem = new RequestItem(productData,15,money);
+		ProductData productData = new ProductData(id,money, "book",ProductType.DRUG, new Date());
+		RequestItem requestitem = new RequestItem(productData,15,money);
 		
 	
 		when(invoiceFactory.create(clientData)).thenReturn(new Invoice(id,clientData));
 		
 		when(tax.calculateTax(ProductType.DRUG, money)).thenReturn(new Tax(money,"opis"));
 		
+
+       invoiceRequest.add(requestitem);
 		
 		//when
-		when(book.issuance(invoiceRequest, tax).thenReturn());
-		
+       Invoice invoice = book.issuance(invoiceRequest,tax);
+		//when(book.issuance(invoiceRequest, tax).thenReturn());
 		
 		
 		
 		//then
+		
+		assertThat(invoice.getItems().size(),is(1));
 		
 		
 		

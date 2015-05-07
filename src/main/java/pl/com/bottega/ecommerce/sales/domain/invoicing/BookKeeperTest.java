@@ -39,8 +39,7 @@ public class BookKeeperTest {
 		when(taxPolicy.calculateTax(ProductType.FOOD, money)).thenReturn(
 				new Tax(money, "opis"));
 
-		ProductData productData = new ProductData(id, money, "book",
-				ProductType.FOOD, new Date(0));
+		ProductData productData = new ProductBuilder().withPrice(1).withProductType(ProductType.FOOD).build();
 
 		RequestItem requestItem = new RequestItem(productData, 20, money);
 		invoiceRequest.add(requestItem);
@@ -68,6 +67,7 @@ public class BookKeeperTest {
 		ProductType productTypeEveryItem = ProductType.FOOD;
 		ClientData clientData = new ClientData(id, "Arek");
 		ProductData productData = new ProductData(id,money, "book",ProductType.DRUG, new Date());
+		
 		RequestItem requestitem = new RequestItem(productData, 4,
 				money);
 

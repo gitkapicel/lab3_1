@@ -65,7 +65,7 @@ public class BookKeeperTest {
 		// given
 		Id id = new Id("1");
 		Money money = new Money(10);
-		//ProductType productTypeEveryItem = ProductType.FOOD;
+		ProductType productTypeEveryItem = ProductType.FOOD;
 		ClientData clientData = new ClientData(id, "Arek");
 		ProductData productData = new ProductData(id,money, "book",ProductType.DRUG, new Date());
 		RequestItem requestitem = new RequestItem(productData, 4,

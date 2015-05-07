@@ -41,7 +41,8 @@ public class BookKeeperTest {
 
 		ProductData productData = new ProductBuilder().withPrice(1).withProductType(ProductType.FOOD).build();
 
-		RequestItem requestItem = new RequestItem(productData, 20, money);
+		RequestItem requestItem = new RequestItemBuild().withProductData(productData).witTotalCost(10).build();
+
 		invoiceRequest.add(requestItem);
 		
 		Invoice invoice = book.issuance(invoiceRequest,taxPolicy);
@@ -66,17 +67,18 @@ public class BookKeeperTest {
 		Money money = new Money(10);
 		ProductType productTypeEveryItem = ProductType.FOOD;
 		ClientData clientData = new ClientData(id, "Arek");
-		ProductData productData = new ProductData(id,money, "book",ProductType.DRUG, new Date());
+		//ProductData productData = new ProductData(id,money, "book",ProductType.DRUG, new Date());
+		ProductData productData = new ProductBuilder().withProductId(id).withPrice(10).withName("book").withProductType(ProductType.FOOD).build();
+		RequestItem requestitem = new RequestItemBuild().withProductData(productData).withQuantity(4).witTotalCost(10).build();
+
 		
-		RequestItem requestitem = new RequestItem(productData, 4,
-				money);
 
 		InvoiceFactory invoiceFactory = mock(InvoiceFactory.class);
 		BookKeeper book = new BookKeeper(invoiceFactory);
 		when(invoiceFactory.create(clientData)).thenReturn(
 				new Invoice(id, clientData));
 		TaxPolicy tax = mock(TaxPolicy.class);
-		when(tax.calculateTax(ProductType.DRUG, money))
+		when(tax.calculateTax(ProductType.FOOD, money))
 				.thenReturn(new Tax(money, "opis"));
 
 		InvoiceRequest invoiceRequest = new InvoiceRequest(clientData);
@@ -88,6 +90,6 @@ public class BookKeeperTest {
 
 		// then
 		Mockito.verify(tax, Mockito.times(2)).calculateTax(
-				ProductType.DRUG, money);
+				ProductType.FOOD, money);
 	}
 }

@@ -24,7 +24,7 @@ public class BookKeeperTest {
 		Id id = new Id("1");
 		InvoiceFactory invoiceFactory = mock(InvoiceFactory.class);
 		BookKeeper book = new BookKeeper(invoiceFactory);
-		ClientData clientData = new ClientData(id,"dzemba");
+		ClientData clientData = new ClientDataBuild().withId(id).withName("dzemba").build();
 				
 		
 		TaxPolicy taxPolicy = mock(TaxPolicy.class);
@@ -66,7 +66,7 @@ public class BookKeeperTest {
 		Id id = new Id("1");
 		Money money = new Money(10);
 		ProductType productTypeEveryItem = ProductType.FOOD;
-		ClientData clientData = new ClientData(id, "Arek");
+		ClientData clientData = new ClientDataBuild().withId(id).withName("dzemba").build();
 		//ProductData productData = new ProductData(id,money, "book",ProductType.DRUG, new Date());
 		ProductData productData = new ProductBuilder().withProductId(id).withPrice(10).withName("book").withProductType(ProductType.FOOD).build();
 		RequestItem requestitem = new RequestItemBuild().withProductData(productData).withQuantity(4).witTotalCost(10).build();
